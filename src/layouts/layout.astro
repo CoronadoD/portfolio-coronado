@@ -1,0 +1,151 @@
+---
+interface Props {
+	title: string;
+}
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Dan Coronado Studio | High-End Branding & Digital Performance." />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>{title}</title>
+		
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter..." rel="stylesheet">
+	</head>
+	<body>
+		<slot />
+
+		<div id="caseModal" class="modal-wrapper">
+			<div class="modal-overlay"></div>
+			<button class="modal-close" aria-label="Fechar">&times;</button>
+			<div class="modal-container" id="modalGrid"></div>
+		</div>
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--bg-main: #080808;
+		--surface: #111111;
+		--text-primary: #EDEDED;
+		--text-muted: #7A7A7A;
+		--accent-bjj: #D91C1C;
+		--border: #222222;
+	}
+
+	* { box-sizing: border-box; margin: 0; padding: 0; }
+	html { background: var(--bg-main); color: var(--text-primary); font-family: Arial, Helvetica, sans-serif; }
+	body { min-height: 100vh; overflow-x: hidden; }
+
+	*, h1, h2, h3, h4, p, span, a, button, div {
+		font-family: Arial, Helvetica, sans-serif !important;
+	}
+
+	.btn-editorial {
+		display: inline-block;
+		padding: 14px 34px;
+		border: 1px solid var(--border);
+		color: var(--text-primary);
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+		background: transparent;
+		cursor: pointer;
+		text-decoration: none;
+		font-weight: 500;
+	}
+	.btn-editorial:hover {
+		border-color: var(--text-primary);
+		background: var(--text-primary);
+		color: var(--bg-main);
+	}
+
+	/* SISTEMA DO MODAL */
+	.modal-wrapper { position: fixed; inset: 0; z-index: 9999; display: none; align-items: center; justify-content: center; padding: 3vw; opacity: 0; transition: opacity 0.3s ease; }
+	.modal-wrapper.is-open { display: flex; opacity: 1; }
+	.modal-overlay { position: absolute; inset: 0; background: rgba(5, 5, 5, 0.92); backdrop-filter: blur(8px); }
+	.modal-close { position: absolute; top: 25px; right: 35px; background: none; border: none; color: var(--text-primary); font-size: 2.5rem; cursor: pointer; z-index: 10001; font-weight: 300; }
+
+	.modal-container {
+		position: relative;
+		width: 100%;
+		max-width: 1100px;
+		max-height: 88vh;
+		overflow-y: auto;
+		z-index: 10000;
+		padding-right: 8px;
+	}
+	.modal-container::-webkit-scrollbar { width: 3px; }
+	.modal-container::-webkit-scrollbar-thumb { background: var(--border); }
+
+	.case-grid-editorial { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; }
+	.media-block { width: 100%; border-radius: 2px; background: var(--surface); object-fit: cover; display: block; border: 1px solid var(--border); }
+	.hero-media { grid-column: 1 / -1; aspect-ratio: 16 / 9; max-height: 70vh; }
+	.thumb-media { aspect-ratio: 4 / 3; }
+
+	@media (max-width: 768px) {
+		.case-grid-editorial { grid-template-columns: 1fr; }
+		.hero-media, .thumb-media { grid-column: 1 / -1; }
+	}
+</style>
+
+<script is:inline>
+	document.addEventListener('DOMContentLoaded', () => {
+		const modal = document.getElementById('caseModal');
+		const grid = document.getElementById('modalGrid');
+		const overlay = document.querySelector('.modal-overlay');
+		const closeBtn = document.querySelector('.modal-close');
+
+		document.querySelectorAll('.project-card').forEach(card => {
+			const video = card.querySelector('.video-preview');
+			if (video) {
+				card.addEventListener('mouseenter', () => video.play());
+				card.addEventListener('mouseleave', () => {
+					video.pause();
+					video.currentTime = 0;
+				});
+			}
+
+			card.addEventListener('click', () => {
+				const rawAssets = card.getAttribute('data-assets');
+				if (!rawAssets) return;
+
+				const assetList = rawAssets.split(',').map(s => s.trim()).filter(Boolean);
+				
+				let gridHTML = '<div class="case-grid-editorial">';
+				assetList.forEach((src, idx) => {
+					const isVideo = /\.(mp4|mov|webm)$/i.test(src);
+					const blockClass = idx === 0 ? 'media-block hero-media' : 'media-block thumb-media';
+					
+					if (isVideo) {
+						gridHTML += `<video src="${src}" controls playsinline class="${blockClass}"></video>`;
+					} else {
+						gridHTML += `<img src="${src}" alt="Asset Editorial" loading="lazy" class="${blockClass}" />`;
+					}
+				});
+				gridHTML += '</div>';
+
+				grid.innerHTML = gridHTML;
+				modal.classList.add('is-open');
+				document.body.style.overflow = 'hidden';
+			});
+		});
+
+		const fecharModal = () => {
+			modal.classList.remove('is-open');
+			setTimeout(() => { grid.innerHTML = ''; }, 300);
+			document.body.style.overflow = 'auto';
+		};
+
+		if (closeBtn) closeBtn.addEventListener('click', fecharModal);
+		if (overlay) overlay.addEventListener('click', fecharModal);
+		document.addEventListener('keydown', (e) => { if (e.key === 'Escape') fecharModal(); });
+	});
+</script>

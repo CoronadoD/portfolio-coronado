@@ -1,0 +1,266 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const projects = [
+  {
+    id: 'egb',
+    title: 'EGB Training Centre',
+    subtitle: 'Brand Foundation • High-Performance Martial Arts',
+    imageUrl: '/egb/logo.png',
+    hoverVideoUrl: '', 
+    hasBeltDetail: true, // Aciona o detalhe vermelho na letra B
+    caseAssets: ['/egb/kimono.png', '/egb/camiseta1.png', '/egb/camiseta2.png']
+  },
+  {
+    id: 'imobiliaria',
+    title: 'O Fim do "Vende-se"',
+    subtitle: 'Posicionamento Digital & Editorial Real Estate',
+    imageUrl: '/imobiliaria/capa.png',
+    hoverVideoUrl: '/imobiliaria/video1.mp4',
+    caseAssets: ['/imobiliaria/video1.mp4', '/imobiliaria/capa.png']
+  },
+  {
+    id: 'rm',
+    title: 'Site RM Veiculos',
+    subtitle: 'Web Development • UI/UX • Sanity CMS Architecture',
+    imageUrl: '/siteweb/cap1.png',
+    hoverVideoUrl: '/siteweb/video1.mp4',
+    caseAssets: ['/siteweb/video1.mp4', '/siteweb/cap1.png']
+  },
+  {
+    id: 'cesar',
+    title: 'Tendência Kids',
+    subtitle: 'Brand Foundation • Personal Athlete Direction',
+    imageUrl: '/cesar/logo.png',
+    hoverVideoUrl: '/cesar/camiseta.mp4',
+    caseAssets: ['/cesar/logo.png', '/cesar/camiseta.mp4', '/cesar/sacola.mp4']
+  },
+  {
+    id: 'cross',
+    title: 'Cross Barber Shop',
+    subtitle: 'Visual Identity • Architecture Signage System',
+    imageUrl: '/cross/logocross.png',
+    hoverVideoUrl: '',
+    caseAssets: ['/cross/logocross.png', '/cross/fachadacross.png', '/cross/placacross.png']
+  },
+  {
+    id: 'debora',
+    title: 'Débora Zaneratto',
+    subtitle: 'Editorial Direction • Institutional Stationery',
+    imageUrl: '/debora/logo.png',
+    hoverVideoUrl: '',
+    caseAssets: ['/debora/logo.png', '/debora/placa1.png', '/debora/placa2.png', '/debora/cracha.png', '/debora/cartãoDZ.png']
+  },
+  {
+    id: 'andreina',
+    title: 'Studio Andreina Santos',
+    subtitle: 'Brand Foundation • Fashion & Lifestyle Assets',
+    imageUrl: '/andreina/logoAS.png',
+    hoverVideoUrl: '',
+    caseAssets: ['/andreina/logoAS.png', '/andreina/bolsaAS.png', '/andreina/camisetaAS.png', '/andreina/casrtaoAS.png']
+  },
+  {
+    id: 'felix',
+    title: 'Felix Decor | Design Interno',
+    subtitle: 'Brand Foundation • Fashion & Lifestyle Assets',
+    imageUrl: '/felix/logo.png',
+    hoverVideoUrl: '/felix/video1.mp4',
+    caseAssets: ['/felix/logo.png', '/felix/moletom.png', '/felix/video1.mp4', '/felix/video2.mp4']
+  }
+];
+---
+
+<Layout title="Coronado Studio | Portfolio">
+	<main class="page-container">
+		
+		<!-- HERO SECTION -->
+		<section class="hero-section">
+			<div class="hero-content">
+				<p class="pre-title">Direção Criativa e Desenvolvimento</p>
+				<h1 class="hero-title">Coronado Studio</h1>
+				<p class="hero-tagline">
+					Elevando a estética e a conversão de marcas através de um ecossistema digital integrado.
+				</p>
+				<div class="hero-actions">
+					<a href="#selected-works" class="btn-editorial">Ver projetos</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- GRID DE PROJETOS -->
+		<section id="selected-works" class="works-section">
+			<div class="section-header">
+				<h2 class="section-title">PROJETOS <span class="counter">({projects.length})</span></h2>
+				<div class="divider"></div>
+			</div>
+
+			<div class="grid-editorial">
+				{projects.map((proj) => (
+					<article class="project-card" data-assets={proj.caseAssets.join(',')}>
+						<div class="frame-wrapper">
+							<img src={proj.imageUrl} alt={proj.title} class="static-thumb" loading="lazy" />
+							
+							{proj.hoverVideoUrl && (
+								<video 
+									src={proj.hoverVideoUrl} 
+									muted 
+									loop 
+									playsinline 
+									preload="none"
+									class="video-preview"
+								></video>
+							)}
+
+							<div class="card-overlay">
+								<span class="view-indicator">Expandir</span>
+							</div>
+						</div>
+
+						<div class="card-meta">
+							<h3 class="proj-title">
+								{proj.hasBeltDetail ? (
+									<span>
+										EG<span class="bjj-b">B<i class="belt-tip"></i></span> Training Centre
+									</span>
+								) : proj.title}
+							</h3>
+							<p class="proj-subtitle">{proj.subtitle}</p>
+						</div>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<!-- RODAPÉ EDITORIAL -->
+		<footer class="studio-footer">
+			<div class="footer-inner">
+				<h2 class="footer-cta-title">Pronto para elevar o padrão visual da sua marca?</h2>
+				<a href="https://wa.me/SEUNUMERODEWHATSAPP?text=Olá%20Dan,%20vi%20seu%20portfólio%20e%20gostaria%20de%20falar%20sobre%20um%20projeto." target="_blank" class="btn-editorial">
+					INICIAR UM PROJETO
+				</a>
+				<p class="copyright">© 2026 Coronado Studio.</p>
+			</div>
+		</footer>
+
+	</main>
+</Layout>
+
+<style>
+	.page-container { max-width: 1380px; margin: 0 auto; padding: 0 4vw; }
+
+	/* Hero */
+	.hero-section { min-height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center; border-bottom: 1px solid var(--border); }
+	
+	.pre-title { 
+		font-size: 0.7rem; 
+		text-transform: uppercase; 
+		letter-spacing: 0.25em; 
+		color: var(--text-muted); 
+		margin-bottom: 20px; 
+		/* Altere a fonte do texto pequeno acima do nome, se quiser */
+		font-family: 'Nome da Sua Fonte', Arial, sans-serif !important;
+	}
+	
+	.hero-title { 
+		font-size: clamp(2.8rem, 6vw, 5.5rem); 
+		letter-spacing: -0.02em; 
+		font-weight: 700; 
+		margin-bottom: 24px; 
+		color: #fff; 
+		/* AQUI ESTÁ O NOME PRINCIPAL (Dan Coronado / Coronado Studio) */
+		font-family: 'Nome da Sua Fonte', Arial, sans-serif !important;
+	}
+	
+	.hero-tagline { 
+		font-size: clamp(1rem, 1.4vw, 1.2rem); 
+		color: var(--text-muted); 
+		max-width: 600px; 
+		margin: 0 auto 40px auto; 
+		line-height: 1.6; 
+		font-weight: 300; 
+		/* Altere a fonte do texto descritivo abaixo do nome */
+		font-family: 'Nome da Sua Fonte', Arial, sans-serif !important;
+	}
+
+	/* Works Section */
+	.works-section { padding: 120px 0; }
+	.section-header { display: flex; align-items: center; gap: 24px; margin-bottom: 64px; }
+	.section-title { font-size: 1.75rem; letter-spacing: 0.05em; }
+	.counter { font-size: 1rem; color: var(--text-muted); font-family: Arial, sans-serif font-weight: 300; }
+	.divider { flex: 1; height: 1px; background: var(--border); }
+
+	/* Grid Editorial */
+	.grid-editorial { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); row-gap: 64px; column-gap: 32px; }
+	
+	.project-card { cursor: pointer; group: hover; }
+	
+	.frame-wrapper { position: relative; aspect-ratio: 4 / 5; background: var(--surface); overflow: hidden; border: 1px solid var(--border); margin-bottom: 18px; }
+	
+	.static-thumb { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease; }
+	.video-preview { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.4s ease; }
+	
+	.card-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: flex-end; padding: 24px; opacity: 0; transition: opacity 0.4s ease; }
+	.view-indicator { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: #fff; border-bottom: 1px solid #fff; padding-bottom: 4px; }
+
+	/* Animações de Hover */
+	.project-card:hover .static-thumb { transform: scale(1.04); }
+	.project-card:hover .video-preview { opacity: 1; }
+	.project-card:hover .card-overlay { opacity: 1; }
+	.project-card:hover .video-preview + .card-overlay { background: transparent; } /* Se tiver vídeo rodando, não escurece */
+
+	/* Meta do Card */
+	.proj-title { 
+		font-size: 1.15rem; 
+		margin-bottom: 6px; 
+		color: var(--text-primary); 
+		font-weight: 500; 
+		/* Altere aqui para a fonte desejada no TÍTULO do card */
+		font-family: 'Nome da Sua Fonte', Arial, sans-serif !important; 
+	}
+	
+	.proj-subtitle { 
+		font-size: 0.82rem; 
+		color: var(--text-muted); 
+		letter-spacing: 0.02em; 
+		/* Altere aqui para a fonte desejada no SUBTÍTULO do card */
+		font-family: 'Nome da Sua Fonte', Arial, sans-serif !important; 
+	}
+
+	/* Opcional: Se quiser mudar a fonte daquele texto "Expandir Case" que aparece ao passar o mouse */
+	.view-indicator { 
+		font-family: 'Nome da Sua Fonte', Arial, sans-serif !important;
+	}
+
+	/* ASSINATURA DAN CORONADO: Faixa Preta no 'B' */
+	.bjj-b { position: relative; display: inline-block; }
+	.belt-tip {
+		position: absolute;
+		top: 48%;
+		left: -10%;
+		width: 120%;
+		height: 3px;
+		background: #111; /* Cor da faixa preta */
+		transform: translateY(-50%) rotate(-8deg);
+		display: block;
+		box-shadow: 2px 0 0 0 var(--accent-bjj); /* A ponta vermelha na extremidade */
+		pointer-events: none;
+	}
+
+	/* Rodapé */
+	.studio-footer { padding: 160px 0 80px 0; border-top: 1px solid var(--border); text-align: center; }
+	
+	.footer-cta-title { 
+		font-size: clamp(1.8rem, 3vw, 3rem); 
+		max-width: 600px; 
+		margin: 0 auto 40px auto; 
+		line-height: 1.3;
+		font-family: 'Nome da Sua Fonte', Arial, sans-serif !important; /* <-- A FONTE DO TÍTULO ENTRA AQUI */
+	}
+	
+	/* Regra específica para o botão do rodapé */
+	.studio-footer .btn-editorial {
+		font-family: 'Nome da Sua Fonte', Arial, sans-serif !important; /* <-- A FONTE DO BOTÃO ENTRA AQUI */
+	}
+
+	.copyright { margin-top: 120px; font-size: 0.75rem; color: #444; letter-spacing: 0.1em; text-transform: uppercase; }
+</style>

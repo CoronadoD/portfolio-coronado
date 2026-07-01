@@ -1,0 +1,189 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const allProjects = [
+  {
+    id: 'egb',
+    title: 'EGB Training Centre',
+    subtitle: 'Brand Foundation • High-Performance Martial Arts',
+    imageUrl: '/egb/logo.png',
+    hoverVideoUrl: '', 
+    hasBeltDetail: true,
+    caseAssets: ['/egb/kimono.png', '/egb/camiseta1.png', '/egb/camiseta2.png']
+  },
+  {
+    id: 'cesar',
+    title: 'Cesar Performance',
+    subtitle: 'Brand Foundation • Personal Athlete Direction',
+    imageUrl: '/cesar/logo.png',
+    hoverVideoUrl: '/cesar/camiseta.mp4',
+    caseAssets: ['/cesar/logo.png', '/cesar/camiseta.mp4', '/cesar/sacola.mp4']
+  },
+  {
+    id: 'cross',
+    title: 'Cross Barber Shop',
+    subtitle: 'Visual Identity • Architecture Signage System',
+    imageUrl: '/cross/logocross.png',
+    hoverVideoUrl: '',
+    caseAssets: ['/cross/logocross.png', '/cross/fachadacross.png', '/cross/placacross.png']
+  },
+  {
+    id: 'debora',
+    title: 'Débora Zago',
+    subtitle: 'Editorial Direction • Institutional Stationery',
+    imageUrl: '/debora/logo.png',
+    hoverVideoUrl: '',
+    caseAssets: ['/debora/logo.png', '/debora/placa1.png', '/debora/placa2.png', '/debora/cracha.png', '/debora/cartãoDZ.png']
+  },
+  {
+    id: 'andreina',
+    title: 'Andreina Studio',
+    subtitle: 'Brand Foundation • Fashion & Lifestyle Assets',
+    imageUrl: '/andreina/logoAS.png',
+    hoverVideoUrl: '',
+    caseAssets: ['/andreina/logoAS.png', '/andreina/bolsaAS.png', '/andreina/camisetaAS.png', '/andreina/casrtaoAS.png']
+  },
+  {
+    id: 'felix',
+    title: 'Felix',
+    subtitle: 'Brand Foundation • Audiovisual Performance',
+    imageUrl: '/felix/logo.png',
+    hoverVideoUrl: '/felix/video1.mp4',
+    caseAssets: ['/felix/logo.png', '/felix/moletom.png', '/felix/video1.mp4', '/felix/video2.mp4']
+  },
+  {
+    id: 'imobiliaria',
+    title: 'O Fim do "Vende-se"',
+    subtitle: 'Posicionamento Digital & Editorial Real Estate',
+    imageUrl: '/imobiliaria/capa.png',
+    hoverVideoUrl: '/imobiliaria/video1.mp4',
+    caseAssets: ['/imobiliaria/video-completo.mp4', '/imobiliaria/capa.png']
+  }
+];
+---
+
+<Layout title="Arquivo de Projetos | Dan Coronado Studio">
+	<main class="page-container archive-page">
+		
+		<header class="archive-header">
+			<a href="/" class="btn-back">
+				<span class="arrow">&larr;</span> Voltar para o Início
+			</a>
+			
+			<div class="title-wrapper">
+				<h1 class="archive-title">Acervo Completo</h1>
+				<span class="count-badge">{allProjects.length}</span>
+			</div>
+			
+			<p class="archive-tagline">
+				Índice geral de projetos desenvolvidos em posicionamento de marca, direção de arte, audiovisual e engenharia web.
+			</p>
+		</header>
+
+		<section class="works-section">
+			<div class="grid-editorial">
+				{allProjects.map((proj) => (
+					<article class="project-card" data-assets={proj.caseAssets.join(',')}>
+						<div class="frame-wrapper">
+							<img src={proj.imageUrl} alt={proj.title} class="static-thumb" loading="lazy" />
+							
+							{proj.hoverVideoUrl && proj.hoverVideoUrl !== '' && (
+								<video 
+									src={proj.hoverVideoUrl} 
+									muted 
+									loop 
+									playsinline 
+									preload="none"
+									class="video-preview"
+								></video>
+							)}
+
+							<div class="card-overlay">
+								<span class="view-indicator">Expandir Case</span>
+							</div>
+						</div>
+
+						<div class="card-meta">
+							<h3 class="proj-title">
+								{proj.hasBeltDetail ? (
+									<span>
+										EG<span class="bjj-b">B<i class="belt-tip"></i></span> Training Centre
+									</span>
+								) : proj.title}
+							</h3>
+							<p class="proj-subtitle">{proj.subtitle}</p>
+						</div>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<footer class="studio-footer">
+			<div class="footer-inner">
+				<h2 class="footer-cta-title">Viu algo que resolve o problema da sua empresa?</h2>
+				<a href="https://wa.me/SEUNUMERODEWHATSAPP?text=Olá%20Dan,%20estava%20olhando%20seu%20arquivo%20de%20projetos%20e%20gostaria%20de%20conversar." target="_blank" class="btn-editorial">
+					Falar no WhatsApp
+				</a>
+			</div>
+		</footer>
+
+	</main>
+</Layout>
+
+<style>
+	.page-container { max-width: 1380px; margin: 0 auto; padding: 0 4vw; }
+	.archive-page { padding-top: 80px; }
+
+	/* Cabeçalho */
+	.archive-header { margin-bottom: 100px; border-bottom: 1px solid var(--border); padding-bottom: 60px; }
+	
+	.btn-back { display: inline-flex; align-items: center; gap: 10px; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; text-decoration: none; margin-bottom: 60px; transition: color 0.3s ease; font-weight: 500; }
+	.btn-back:hover { color: var(--text-primary); }
+	.btn-back .arrow { font-size: 1.2rem; line-height: 1; }
+
+	.title-wrapper { display: flex; align-items: baseline; gap: 20px; margin-bottom: 24px; }
+	.archive-title { font-size: clamp(2.2rem, 5vw, 4.5rem); letter-spacing: -0.02em; color: #fff; line-height: 1; font-weight: 600; }
+	.count-badge { font-size: 1.1rem; font-weight: 300; color: var(--text-muted); padding: 2px 12px; border: 1px solid var(--border); border-radius: 40px; transform: translateY(-5px); }
+
+	.archive-tagline { font-size: 1.05rem; color: var(--text-muted); max-width: 600px; line-height: 1.6; font-weight: 300; }
+
+	/* Grid & Cards */
+	.works-section { padding-bottom: 120px; }
+	.grid-editorial { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); row-gap: 64px; column-gap: 32px; }
+	.project-card { cursor: pointer; }
+	.frame-wrapper { position: relative; aspect-ratio: 4 / 5; background: var(--surface); overflow: hidden; border: 1px solid var(--border); margin-bottom: 18px; }
+	
+	.static-thumb { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease; }
+	.video-preview { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.4s ease; }
+	
+	.card-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: flex-end; padding: 24px; opacity: 0; transition: opacity 0.4s ease; }
+	.view-indicator { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: #fff; border-bottom: 1px solid #fff; padding-bottom: 4px; font-weight: 500; }
+
+	/* Hovers */
+	.project-card:hover .static-thumb { transform: scale(1.04); }
+	.project-card:hover .video-preview { opacity: 1; }
+	.project-card:hover .card-overlay { opacity: 1; }
+
+	/* Meta do Card */
+	.proj-title { font-size: 1.1rem; margin-bottom: 6px; color: var(--text-primary); font-weight: 500; letter-spacing: -0.01em; }
+	.proj-subtitle { font-size: 0.82rem; color: var(--text-muted); letter-spacing: 0.01em; font-weight: 300; }
+
+	/* Detalhe Faixa BJJ */
+	.bjj-b { position: relative; display: inline-block; }
+	.belt-tip {
+		position: absolute;
+		top: 52%;
+		left: -10%;
+		width: 120%;
+		height: 3px;
+		background: #111;
+		transform: translateY(-50%) rotate(-8deg);
+		display: block;
+		box-shadow: 2px 0 0 0 var(--accent-bjj);
+		pointer-events: none;
+	}
+
+	/* Rodapé */
+	.studio-footer { padding: 100px 0; border-top: 1px solid var(--border); text-align: center; }
+	.footer-cta-title { font-size: clamp(1.5rem, 2.5vw, 2.4rem); font-weight: 500; max-width: 580px; margin: 0 auto 40px auto; line-height: 1.4; letter-spacing: -0.02em; }
+</style>
